@@ -39,8 +39,12 @@ function App() {
                     </Fragment>
                 : 
                     <Nav.Item as="li">
-                        <Nav.Link href="/login">Login</Nav.Link>               
+                        <Nav.Link href="/register">Register Now!</Nav.Link>
+                        <Nav.Link href="/login">Login</Nav.Link> 
+                        
+                                      
                     </Nav.Item>
+                    
                 }               
             </Nav> 
             <Fragment>

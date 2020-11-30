@@ -6,6 +6,7 @@ var port = process.env.PORT || 3005;
 
 // Connect to our database
 database.connect((err) => {
+    // dra
     if (err) throw err;
 });
 
@@ -22,9 +23,39 @@ app.use(express.urlencoded({
 
 // Register routes in the main index.js
 app.use('/', [
+    require('./routes/register'),
     require('./routes/tweet'),
     require('./routes/auth')
 ]);
+
+app.get('/users', function (req, res) {
+    res.send('hello world')
+  })
+
+// app.post('/register', (req, res) => {
+// let sql = `INSERT INTO users () VALUES (
+//     '${req.body.user_id}',
+//     '${req.body.content}',
+//     '${moment().utc().format("YYYY-MM-DD hh:mm:ss")}'
+// )`;
+
+// database.query(sql, (err, result) => {
+//     if (err) {
+//         res.status(400).json({
+//             message: err
+//         });
+//         return;
+//     }
+
+//     // If there is no error
+//     res.status(200).json({
+//         status: 200,
+//         success: true
+//     });
+        
+// });
+// });
+
 
 // http://localhost:3005/tweets - GET, POST
 // http://localhost:3005/tweets/user/:id - GET
