@@ -11,6 +11,7 @@ export default function Tweet() {
     const [cookies, setCookie, removeCookie] = useCookies(['userId']);
     const [tweet, setTweet] = useState("");
     const [tweetList, setTweetList] = useState([{}]);
+    const [timelineTweetList, setTimelineTweetList] = useState([{}]);
         
     const getList = () => {
         axios.get('http://localhost:3005/tweets/user/' + cookies.userId)
@@ -20,9 +21,21 @@ export default function Tweet() {
             }
         });       
     }
+    const getTimelineList = () => {
+        axios.get('http://localhost:3005/users/timeline/')
+        .then((res) => {
+            if(res){
+                setTimelineTweetList(res.data);
+            }
+        });
+    }
        
     useEffect(() => {
         getList();
+    }, []);
+
+    useEffect(() => {
+        getTimelineList();
     }, []);
 
     // Redirect if not logged in
@@ -79,7 +92,7 @@ export default function Tweet() {
                 </Row>
                 <Row>
                     <Col>
-                        <h2>Tweets</h2>                        
+                        <h2>Your Tweets</h2>                        
                             {tweetList.length && tweetList.map((item, index) => {
                                 return (
                                     <Card key={index} style={{ width: '18rem' }}>
@@ -88,6 +101,25 @@ export default function Tweet() {
                                             <Card.Text>{item.content}</Card.Text>
                                             <Button variant="danger" size="sm" data-id={item.id} onClick={() => remove(item.id)} >Delete</Button>
                                         </Card.Body>
+                                    </Card>
+                                )
+                            })} 
+                    </Col>
+                    <Col>
+                        <h2>Your Timeline</h2>                        
+                            {timelineTweetList.length && timelineTweetList.map((item, index) => {
+                                return (
+                                    <Card key={index} style={{ width: '18rem' }}>
+                                        {/* <Card.Header tag="h5" > Tweeted by :{item.username}</Card.Header> */}
+                                        <Card.Body>
+                                            <Card.Title tag="h5" > Tweeted by :{item.username}</Card.Title>  
+                                            <Card.Subtitle className="mb-2 text-muted">{moment(item.date_time).format('LLL')}</Card.Subtitle>                                 
+                                            <Card.Text>{item.content}</Card.Text>
+                                            {/* <Button variant="danger" size="sm" data-id={item.id} onClick={() => remove(item.id)} >Delete</Button> */}
+                                        </Card.Body>
+                                        {/* <Card.Footer>
+                                                <small className="text-muted">Last updated 3 mins ago</small>
+                                        </Card.Footer> */}
                                     </Card>
                                 )
                             })} 

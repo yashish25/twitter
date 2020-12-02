@@ -1,5 +1,5 @@
 var express = require('express');
-var cryptr = require('cryptr');
+// var cryptr = require('cryptr');
 var app = express();
 var database = require('../config/database');
 var authValidations = require('../validations/auth');

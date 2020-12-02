@@ -23,6 +23,7 @@ app.use(express.urlencoded({
 
 // Register routes in the main index.js
 app.use('/', [
+    require('./routes/timeline'),
     require('./routes/register'),
     require('./routes/tweet'),
     require('./routes/auth')
